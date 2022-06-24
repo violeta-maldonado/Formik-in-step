@@ -88,6 +88,7 @@ const Result: NextPage = () => {
       text: dataPetForm.weightPet + " kg"
     }
   ]
+  
   return (
     <>
       <Head>
@@ -170,18 +171,17 @@ const Result: NextPage = () => {
               color='#000000'
               sx={{ fontSize: '14px', }}><strong>Select:</strong>
               {dataPetForm.selection.toString()}
-              {/* {dataPetForm.selection.forEach(element => {
-                 element +"," 
-               })
-               }  */}
             </Typography>
           </Box>
         </Grid>
         <Grid item xs={6} sm={5}>
           <Box display="flex" justifyContent="center">
-            <Typography align='center'
-              color='#0C3640'
-              sx={{ fontSize: '15px', }}> FOTO MASCOTA</Typography>
+            <Image
+              src={`data:image/jpeg;base64,${dataPetForm.image}`} 
+               width={100}
+              height={100}
+            /> 
+
           </Box>
         </Grid>
       </Grid>
@@ -200,19 +200,26 @@ const Result: NextPage = () => {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...style, width: 400 }}>
-        <Typography align='justify'
-          color='#0C3640'
-          sx={{ fontSize: '15px', }}><strong> Thank you for filling out the form.</strong></Typography>
-            
-            <Button
-              variant="contained"
-              color="primary"
-              onClick = {()=>null}
-              // onClick={router.push('\')}
-            >
-              Home
-            </Button>
+        <Box sx={{ ...style, width: 400 ,alignItems: 'center' }} display="flex"flexDirection="column">
+          <Image
+            src={'/static/Thanks.png'}
+            width={100}
+            height={100}
+            layout="fixed"
+          />
+          <Typography align='center'
+            color='#0C3640'
+            sx={{ fontSize: '15px', }}><strong> Thank you! for filling out the form.</strong></Typography>
+
+          <Button
+            variant="contained"
+            sx={{ borderRadius: '15px', marginTop: '10px', padding: '10px', color: 'white', backgroundColor: '#0B132B', '&:hover': { backgroundColor: '#0B132B' } }}
+            onClick={() => {
+              router.push('/')
+            }}
+          >
+            Home
+          </Button>
         </Box>
       </Modal>
     </>

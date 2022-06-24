@@ -9,8 +9,6 @@ export interface FormikStepProps
 
 export function FormikStep({ children}: FormikStepProps) {
   const formikRef = useRef(useFormikContext());
-  console.log("formikRef");
-  console.log(formikRef);
   return <>{children }</>;
 }
 

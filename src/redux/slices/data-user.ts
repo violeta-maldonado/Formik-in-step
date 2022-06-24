@@ -20,7 +20,8 @@ export interface IDataPetForm{
   agePet:number,
   weightPet: number,
   racePet: string,
-  selection: (string)[]
+  selection: (string)[],
+  image: string
 }
 // Define the initial state using that type
 const initialState: IDataState = {
@@ -33,13 +34,14 @@ const initialState: IDataState = {
     email:" ",
   },
   dataPetForm: {
-    pet:"",
-    datepet: "01/01/2022",
+    pet: " ",
+    datepet: " ",
     namepet: " ",
     agePet: 0,
     weightPet: 0,
     racePet: " ",
-    selection: []
+    selection: [],
+    image: " ",
   }
 };
 

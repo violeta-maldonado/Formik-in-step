@@ -1,4 +1,4 @@
-import { Box, Typography, Grid, Paper, MenuItem, FormControl, FormControlLabel } from '@mui/material';
+import { Box, Typography, Grid, Paper, MenuItem, FormControl, FormControlLabel, Button } from '@mui/material';
 import { Field, useFormikContext, } from 'formik';
 import Image from 'next/image';
 import { FormikStepper, FormikStep } from '../components/FormikStepper';
@@ -10,7 +10,6 @@ import { dataUserForm, dataPetForm, IDataPetForm, IDataUserForm } from '../redux
 import { DatePicker, } from 'formik-mui-lab';
 import { LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import { values } from 'lodash';
 import { useRef } from 'react';
 import ButtonUploadFile from '../components/button-upload-file';
 
@@ -105,6 +104,28 @@ const FormComp = () => {
   const dispatch = useDispatch()
   const router = useRouter();
   const formikRef = useRef(null);
+  
+  // Button
+  let getBase64 = async (file: File) => {
+    return new Promise(resolve => {
+      let fileInfo;
+      let baseURL = "";
+      // Make new FileReader
+      let reader = new FileReader();
+
+      // Convert the file to base64 text
+      reader.readAsDataURL(file);
+
+      // on reader load somthing...
+      reader.onload = () => {
+        // Make a fileInfo Object
+        const base64String = reader?.result?.replace('data:', '')?.replace(/^.+,/, '');
+        console.log(base64String);
+        resolve(base64String)
+      };
+      
+    });
+  };
 
   return (
     <Box display="flex" flexDirection="column">
@@ -124,9 +145,13 @@ const FormComp = () => {
           date: new Date(),
           subscript: false,
           checkboxPet: [],
-
+          imagePet: "",
         }}
         onSubmit={async (values) => {
+          let auxImage: string = await getBase64(values.imagePet)
+          console.log("image aux")
+          console.log(auxImage)
+           
           const data: IDataUserForm = {
             insurance: values.insurance,
             name: values.name,
@@ -142,23 +167,26 @@ const FormComp = () => {
             weightPet: values.weightPet,
             racePet: values.racePet,
             datepet: values.date,
-            selection: values.checkboxPet
+            selection: values.checkboxPet,
+            image: auxImage,
           };
-          alert(JSON.stringify(values, null, 2))
           dispatch(dataUserForm(data))
           dispatch(dataPetForm(dataPet))
+          console.log(dataPet)
           router.push('\Result')
         }}
 
-      ><Box>
-          <Typography
+      >
+        <Box>
+           <Typography
             align='center'
             color='#0C3640'
             sx={{ fontSize: '36px' }}
           >
             Do you have an account?
           </Typography>
-          <FormikStep label="Personal Data"
+        
+        <FormikStep label="Personal Data"
           >
             <Box role="group" flexDirection="column"
               sx={{
@@ -180,7 +208,7 @@ const FormComp = () => {
                 </Box>
               </Paper>
             </Box>
-          </FormikStep>
+        </FormikStep>
         </Box>
         <FormikStep label="Insurance">
           <Typography
@@ -403,7 +431,7 @@ const FormComp = () => {
             </Box>
           </Box>
         </FormikStep>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <LocalizationProvider dateAdapter={AdapterDateFns}> 
           <FormikStep label="Data pet"
             validationSchema={Yup.object().shape({
               agePet: Yup.number()
@@ -475,7 +503,7 @@ const FormComp = () => {
               </Box>
             </Box>
           </FormikStep>
-        </LocalizationProvider>
+        </LocalizationProvider> 
         <FormikStep label="More information"
           validationSchema={Yup.object().shape({
 
@@ -518,13 +546,24 @@ const FormComp = () => {
             >
               Upload a picture of your pet:
             </Typography>
-                        
+            <Field
+              name="imagePet"
+              type="file"
+              id="contained-button-file"
+              style={{ display: 'none' }}
+              component={SimpleFileUpload}
+              accept={"image/*"}
+            /> 
+            
             <ButtonUploadFile
               label="Change picture"
               typeFile="image/*"
               variant="contained"
-              onChangeFile={async (file) => {console.log(file)}}
-            />
+              onChangeFile={async (file) => {
+                console.log(file)
+                }
+              }
+            /> 
           </Box>
         </FormikStep>
       </FormikStepper>
