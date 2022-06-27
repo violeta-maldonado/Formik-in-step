@@ -2,18 +2,22 @@
 // ID database: appcneIDCOwg4M6D1
 import React from "react";
 import axios from "axios";
-
+const config = {
+    headers: { Authorization: `Bearer keyM3vj81hYaEXNnM` }
+};
 // with axios must need to a package
-export const dataUser = async(dataUser:any) => {
+export const dataUser = async (dataUser: any) => {
     try {
-        const res = await axios.post('https://airtable.com/appcneIDCOwg4M6D1/FormikData', { 
-            insurance: dataUser.insurance, 
-            Name: dataUser.name,
-            LastName: dataUser.lastName,
-            City: dataUser.city,
-            Address: dataUser.address,
-            Email: dataUser.email,
-        });
+        const res = await axios.post('https://airtable.com/appcneIDCOwg4M6D1/FormikData',
+            {
+                insurance: dataUser.insurance,
+                Name: dataUser.name,
+                LastName: dataUser.lastName,
+                City: dataUser.city,
+                Address: dataUser.address,
+                Email: dataUser.email,
+            },
+            config);
         console.log('res', res);
         return res.data;
     } catch (err) {

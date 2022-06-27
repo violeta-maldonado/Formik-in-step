@@ -120,6 +120,7 @@ const FormComp = () => {
       // on reader load somthing...
       reader.onload = () => {
         // Make a fileInfo Object
+        {/* @ts-ignore */}
         const base64String = reader?.result?.replace('data:', '')?.replace(/^.+,/, '');
         console.log(base64String);
         resolve(base64String)
@@ -149,6 +150,7 @@ const FormComp = () => {
           imagePet: "",
         }}
         onSubmit={async (values) => {
+          {/* @ts-ignore */}
           let auxImage: string = await getBase64(values.imagePet)
 
           const data: IDataUserForm = {
