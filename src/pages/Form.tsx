@@ -12,6 +12,7 @@ import { LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { useRef } from 'react';
 import { SimpleFileUpload } from '../components/button-upload-file';
+import {dataUser} from '../services/submit';
 
 interface IAnimalRace {
   title: string;
@@ -170,6 +171,9 @@ const FormComp = () => {
           };
           dispatch(dataUserForm(data))
           dispatch(dataPetForm(dataPet))
+          // const response = await dataUser({
+          //   values
+          // });
           router.push('\Result')
         }}
 
