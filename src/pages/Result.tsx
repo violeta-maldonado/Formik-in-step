@@ -130,6 +130,7 @@ const Result: NextPage = () => {
               personalData?.map((Summary) => (
                 <Typography align='justify'
                   color='#000000'
+                  key={Summary.id}
                   sx={{ fontSize: '14px', }}><strong>{Summary.title}</strong> {Summary.text}</Typography>
 
               ))
@@ -163,6 +164,7 @@ const Result: NextPage = () => {
               petData?.map((Summary) => (
                 <Typography align='justify'
                   color='#000000'
+                  key={Summary.id}
                   sx={{ fontSize: '14px', }}><strong>{Summary.title}</strong> {Summary.text}</Typography>
 
               ))

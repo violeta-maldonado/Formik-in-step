@@ -128,7 +128,22 @@ const FormComp = () => {
 
     });
   };
-
+  const Airtable = require('airtable');
+  const base = new Airtable({
+    apiKey: "keyM3vj81hYaEXNnM",
+  }).base("appcneIDCOwg4M6D1");
+  const handleSubmitInformation = (value:any) => {
+     base('FormikData').create(
+       { Name: value.name, LastName:value.lastName, Insurance: value.insurance, City: value.city, Address: value.address, Email: value.email },
+       //@ts-ignore
+       function (err:any) {
+         if (err) {
+           console.error(err);
+           return;
+         }
+       }
+     );
+  };
   return (
     <Box display="flex" flexDirection="column">
       <FormikStepper
@@ -173,6 +188,7 @@ const FormComp = () => {
           };
           dispatch(dataUserForm(data))
           dispatch(dataPetForm(dataPet))
+          handleSubmitInformation(values)
           // const response = await dataUser({
           //   values
           // });
@@ -508,12 +524,12 @@ const FormComp = () => {
 
                     {
                       true && dogRaces?.map((animalRace) => (
-                        <MenuItem value={animalRace.value}>{animalRace.title}</MenuItem>
+                        <MenuItem value={animalRace.value} key={animalRace.id}>{animalRace.title}</MenuItem>
                       ))
                     }
                     {
                       false && catRaces?.map((animalRace) => (
-                        <MenuItem value={animalRace.value}>{animalRace.title}</MenuItem>
+                        <MenuItem value={animalRace.value } key={animalRace.id}>{animalRace.title}</MenuItem>
                       ))
                     }
                   </Field>
@@ -544,7 +560,7 @@ const FormComp = () => {
             <Box>
               {
                 checkboxOption?.map((animalRace) => (
-                  <Box flexDirection="row" display="flex" >
+                  <Box flexDirection="row" display="flex" key={animalRace.id}>
                     <Field type="checkbox" name="checkboxPet" value={animalRace.value} />
                     <Typography color='#0C3640' paddingX="10px" sx={{ fontSize: '14px' }}>
                       {animalRace.title}
