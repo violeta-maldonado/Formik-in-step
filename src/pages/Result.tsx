@@ -70,7 +70,7 @@ const Result: NextPage = () => {
     {
       id: 1,
       title: "Birthday:",
-      text: dataPetForm.datepet.toString()
+      text: dataPetForm.datepet.toString().split(" ")[2] +" "+ dataPetForm.datepet.toString().split(" ")[1]
     },
     {
       id: 3,

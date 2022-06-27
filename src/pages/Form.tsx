@@ -2,7 +2,7 @@ import { Box, Typography, Grid, Paper, MenuItem, FormControl, FormControlLabel, 
 import { Field, useFormikContext, } from 'formik';
 import Image from 'next/image';
 import { FormikStepper, FormikStep } from '../components/FormikStepper';
-import { TextField, Select, Switch, SimpleFileUpload } from 'formik-mui';
+import { TextField, Select, Switch } from 'formik-mui';
 import * as Yup from "yup";
 import { useRouter } from 'next/router';
 import { useDispatch } from '../redux/store';
@@ -11,7 +11,7 @@ import { DatePicker, } from 'formik-mui-lab';
 import { LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { useRef } from 'react';
-import ButtonUploadFile from '../components/button-upload-file';
+import { SimpleFileUpload } from '../components/button-upload-file';
 
 interface IAnimalRace {
   title: string;
@@ -104,7 +104,7 @@ const FormComp = () => {
   const dispatch = useDispatch()
   const router = useRouter();
   const formikRef = useRef(null);
-  
+
   // Button
   let getBase64 = async (file: File) => {
     return new Promise(resolve => {
@@ -123,7 +123,7 @@ const FormComp = () => {
         console.log(base64String);
         resolve(base64String)
       };
-      
+
     });
   };
 
@@ -149,9 +149,7 @@ const FormComp = () => {
         }}
         onSubmit={async (values) => {
           let auxImage: string = await getBase64(values.imagePet)
-          console.log("image aux")
-          console.log(auxImage)
-           
+
           const data: IDataUserForm = {
             insurance: values.insurance,
             name: values.name,
@@ -172,21 +170,24 @@ const FormComp = () => {
           };
           dispatch(dataUserForm(data))
           dispatch(dataPetForm(dataPet))
-          console.log(dataPet)
           router.push('\Result')
         }}
 
       >
         <Box>
-           <Typography
+          <Typography
             align='center'
             color='#0C3640'
             sx={{ fontSize: '36px' }}
           >
             Do you have an account?
           </Typography>
-        
-        <FormikStep label="Personal Data"
+
+          <FormikStep label="Personal Data"
+            validationSchema={Yup.object().shape({
+              picked: Yup.string()
+                .required("Required field")
+            })}
           >
             <Box role="group" flexDirection="column"
               sx={{
@@ -208,9 +209,13 @@ const FormComp = () => {
                 </Box>
               </Paper>
             </Box>
-        </FormikStep>
+          </FormikStep>
         </Box>
-        <FormikStep label="Insurance">
+        <FormikStep label="Insurance"
+          validationSchema={Yup.object().shape({
+            insurance: Yup.string()
+              .required("Required field")
+          })}>
           <Typography
             align='center'
             color='#0C3640'
@@ -399,7 +404,11 @@ const FormComp = () => {
             </Box>
           </Box>
         </FormikStep>
-        <FormikStep label="Pet">
+        <FormikStep label="Pet"
+          validationSchema={Yup.object().shape({
+            pet: Yup.string()
+              .required("Required field")
+          })}>
           <Typography
             align='center'
             color='#0C3640'
@@ -431,18 +440,21 @@ const FormComp = () => {
             </Box>
           </Box>
         </FormikStep>
-        <LocalizationProvider dateAdapter={AdapterDateFns}> 
-          <FormikStep label="Data pet"
-            validationSchema={Yup.object().shape({
-              agePet: Yup.number()
-                .required("Required field")
-                .max(15, 'Maximun 10'),
-              weightPet: Yup.number()
-                .required("Required field")
-                .max(10, 'Maximun 10 characters'),
-              racePet: Yup.string()
-                .required("Required field")
-            })}>
+        <FormikStep label="Data pet"
+          validationSchema={Yup.object().shape({
+            agePet: Yup.number()
+              .required("Required field")
+              .max(15, 'Maximun 10')
+              .moreThan(0, 'Number greater than zero'),
+            weightPet: Yup.number()
+              .required("Required field")
+              .max(10, 'Maximun 10 characters')
+              .moreThan(0, 'Number greater than zero'),
+            racePet: Yup.string()
+              .required("Required field")
+          })}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+
             <Typography
               align='center'
               color='#0C3640'
@@ -502,11 +514,13 @@ const FormComp = () => {
                 </FormControl>
               </Box>
             </Box>
-          </FormikStep>
-        </LocalizationProvider> 
+          </LocalizationProvider>
+        </FormikStep>
+
         <FormikStep label="More information"
           validationSchema={Yup.object().shape({
-
+            imagePet: Yup.string()
+              .required("Required field")
           })}>
           <Typography
             align='center'
@@ -549,21 +563,13 @@ const FormComp = () => {
             <Field
               name="imagePet"
               type="file"
+              label="Upload image"
               id="contained-button-file"
               style={{ display: 'none' }}
               component={SimpleFileUpload}
               accept={"image/*"}
-            /> 
-            
-            <ButtonUploadFile
-              label="Change picture"
-              typeFile="image/*"
-              variant="contained"
-              onChangeFile={async (file) => {
-                console.log(file)
-                }
-              }
-            /> 
+            />
+
           </Box>
         </FormikStep>
       </FormikStepper>
