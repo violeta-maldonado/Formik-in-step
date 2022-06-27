@@ -12,7 +12,6 @@ import { LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { useRef } from 'react';
 import { SimpleFileUpload } from '../components/button-upload-file';
-import {dataUser} from '../services/submit';
 
 interface IAnimalRace {
   title: string;
@@ -130,10 +129,10 @@ const FormComp = () => {
   };
   const Airtable = require('airtable');
   const base = new Airtable({
-    apiKey: "keyM3vj81hYaEXNnM",
-  }).base("appcneIDCOwg4M6D1");
+    apiKey: process.env.NEXT_PUBLIC_API_KEY_AIRTABLE,
+  }).base(process.env.NEXT_PUBLIC_BASE_ID);
   const handleSubmitInformation = (value:any) => {
-     base('FormikData').create(
+     base(process.env.NEXT_PUBLIC_TABLE_NAME).create(
        { Name: value.name, LastName:value.lastName, Insurance: value.insurance, City: value.city, Address: value.address, Email: value.email },
        //@ts-ignore
        function (err:any) {
@@ -189,9 +188,6 @@ const FormComp = () => {
           dispatch(dataUserForm(data))
           dispatch(dataPetForm(dataPet))
           handleSubmitInformation(values)
-          // const response = await dataUser({
-          //   values
-          // });
           router.push('\Result')
         }}
 
