@@ -106,7 +106,7 @@ const Result: NextPage = () => {
       </Box>
       <Typography align='center'
         color='#0C3640'
-        sx={{ fontSize: '20px', }}> <strong>Prima:</strong> $5 per month</Typography>
+        sx={{ fontSize: '20px', }}> <strong>Premium:</strong> $5 per month</Typography>
 
       <Typography align='center'
         color='#0C3640'
