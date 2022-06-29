@@ -1,9 +1,30 @@
+## Are forms important?
+The collection and analysis of data is an essential part of a project, for which the use of forms is an important tool that allows the acquisition of relevant data.
+There are some benefits of digital forms such as:
+ - Save of time and money
+ - Massive reach
+ - Eliminate input errors and data loss
+ - Flexibility to modify the form
+
 ## About this project
-This project is a Form in step
+This project is a web page that displays a form in multiple steps, using the Formik library for the form and Yup for data validation. Different elements of a form are used, such as:
+ - TextField
+ - CheckBox
+ - RadioButton
+ - Switch
+ - Selector
+ - And Input a image
+[<img src="public/PageImage1.JPG" width="600"/>](public/PageImage1.JPG)
+[<img src="public/PageImage2.JPG" width="600"/>](public/PageImage2.JPG)
+
+Finally, after the form, a summary of the data entered is displayed.
+[<img src="public/PageImage3.JPG" width="600"/>](public/PageImage3.JPG)
+
+This project was coded using the next.js framework with Typescript. [DEMO](https://formik-in-step.vercel.app/)
 
 ## Clone the project 
 ```sh
-git clone https://github.com/violeta-maldonado/pert.git
+git clone https://github.com/violeta-maldonado/Formik-in-step.git
 ```
 ## Packages
 The following packages are used in this project:

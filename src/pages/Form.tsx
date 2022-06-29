@@ -119,7 +119,7 @@ const FormComp = () => {
       // on reader load somthing...
       reader.onload = () => {
         // Make a fileInfo Object
-        {/* @ts-ignore */}
+        {/* @ts-ignore */ }
         const base64String = reader?.result?.replace('data:', '')?.replace(/^.+,/, '');
         console.log(base64String);
         resolve(base64String)
@@ -131,17 +131,31 @@ const FormComp = () => {
   const base = new Airtable({
     apiKey: process.env.NEXT_PUBLIC_API_KEY_AIRTABLE,
   }).base(process.env.NEXT_PUBLIC_BASE_ID);
-  const handleSubmitInformation = (value:any) => {
-     base(process.env.NEXT_PUBLIC_TABLE_NAME).create(
-       { Name: value.name, LastName:value.lastName, Insurance: value.insurance, City: value.city, Address: value.address, Email: value.email },
-       //@ts-ignore
-       function (err:any) {
-         if (err) {
-           console.error(err);
-           return;
-         }
-       }
-     );
+  const handleSubmitInformation = (value: any, auxImage: string) => {
+    base(process.env.NEXT_PUBLIC_TABLE_NAME).create(
+      {
+        Name: value.name,
+        LastName: value.lastName,
+        Insurance: value.insurance,
+        City: value.city,
+        Address: value.address,
+        Email: value.email,
+        Pet: value.pet,
+        NamePet: value.namePet,
+        AgePet: value.agePet.toString(),
+        WeightPet: value.weightPet.toString(),
+        RacePet: value.racePet,
+        //DatePet: value.date,
+        Selection: value.checkboxPet.toString(),
+      },
+      //@ts-ignore
+      function (err: any) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+      }
+    );
   };
   return (
     <Box display="flex" flexDirection="column">
@@ -164,7 +178,7 @@ const FormComp = () => {
           imagePet: "",
         }}
         onSubmit={async (values) => {
-          {/* @ts-ignore */}
+          {/* @ts-ignore */ }
           let auxImage: string = await getBase64(values.imagePet)
 
           const data: IDataUserForm = {
@@ -187,7 +201,7 @@ const FormComp = () => {
           };
           dispatch(dataUserForm(data))
           dispatch(dataPetForm(dataPet))
-          handleSubmitInformation(values)
+          handleSubmitInformation(values,auxImage)
           router.push('\Result')
         }}
 
@@ -525,7 +539,7 @@ const FormComp = () => {
                     }
                     {
                       false && catRaces?.map((animalRace) => (
-                        <MenuItem value={animalRace.value } key={animalRace.id}>{animalRace.title}</MenuItem>
+                        <MenuItem value={animalRace.value} key={animalRace.id}>{animalRace.title}</MenuItem>
                       ))
                     }
                   </Field>
