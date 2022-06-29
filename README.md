@@ -14,11 +14,15 @@ This project is a web page that displays a form in multiple steps, using the For
  - Switch
  - Selector
  - And Input a image
+
 [<img src="public/PageImage1.JPG" width="600"/>](public/PageImage1.JPG)
+
 [<img src="public/PageImage2.JPG" width="600"/>](public/PageImage2.JPG)
 
 Finally, after the form, a summary of the data entered is displayed.
 [<img src="public/PageImage3.JPG" width="600"/>](public/PageImage3.JPG)
+
+Additionally, the form data is sent to a base in AirTable, to store them.
 
 This project was coded using the next.js framework with Typescript. [DEMO](https://formik-in-step.vercel.app/)
 
